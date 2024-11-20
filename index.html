@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Spike Sync</title>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header class="header">
+    <img src="SpikeSyncLogo.png" alt="SpikeSync logo - volleyball line drawing with text Southern LA" class="logo">
+    <h1>Spike Sync</h1>
+  </header>
+
+  <main class="tournament-grid">
+    <div class="tournament-card" onclick="showTournament(1)">
+      <h2>Tournament #1</h2>
+      <p>Click to view details</p>
+    </div>
+    <div class="tournament-card" onclick="showTournament(2)">
+      <h2>Tournament #2</h2>
+      <p>Click to view details</p>
+    </div>
+    <div class="tournament-card" onclick="showTournament(3)">
+      <h2>Tournament #3</h2>
+      <p>Click to view details</p>
+    </div>
+    <div class="tournament-card" onclick="showTournament(4)">
+      <h2>Tournament #4</h2>
+      <p>Click to view details</p>
+    </div>
+  </main>
+
+  <div class="pool-section" style="display: none;" id="tournamentView">
+    <button class="back-button" onclick="showHome()">← Back to Tournaments</button>
+    <h2 id="tournamentTitle" style="margin-bottom: 2rem;">Tournament Details</h2>
+
+    <div class="pool-tabs">
+      <button class="pool-tab" onclick="showPool('A')">Pool A</button>
+      <button class="pool-tab" onclick="showPool('B')">Pool B</button>
+      <button class="pool-tab" onclick="showPool('C')">Pool C</button>
+    </div>
+
+    <table class="pool-table" id="poolTable">
+      <thead>
+        <tr>
+          <th>Team Name</th>
+          <th>Wins</th>
+          <th>Losses</th>
+          <th>Point Differential</th>
+          <th>Total Points</th>
+          <th>Place</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Dynamic content will be inserted here -->
+      </tbody>
+    </table>
+
+    <div class="match-section">
+      <h3>Match Results</h3>
+      <div id="matchResults">
+        <!-- Dynamic match results will be inserted here -->
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <a href="#" onclick="showHome()" style="color: white; text-decoration: none;">Home Page</a>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
