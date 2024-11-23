@@ -1,0 +1,86 @@
+{
+  "RequestItems": {
+    "Teams": [
+      {
+        "PutRequest": {
+          "Item": {
+            "TeamID": { "S": "Team#1" },
+            "TeamName": { "S": "Spikers United" },
+            "TournamentNumber": { "N": "1" },
+            "Pool": { "S": "A" },
+            "PoolPlayWins": { "N": "3" },
+            "PoolPlayMatchState": { "S": "done" },
+            "PoolPlayDifferentialPoints": {
+              "L": [
+                { "N": "5" },
+                { "N": "-3" },
+                { "N": "7" }
+              ]
+            },
+            "PoolPlayDifferentialTotal": { "N": "9" },
+            "TeamsBeatenPoolPlay": {
+              "L": [
+                { "S": "Team#2" },
+                { "S": "Team#4" }
+              ]
+            },
+            "PoolPlayRank": { "N": "1" },
+            "Bracket": { "S": "Gold" },
+            "BracketDifferentialPoints": {
+              "L": [
+                { "N": "4" },
+                { "N": "-2" }
+              ]
+            },
+            "BracketDifferentialTotal": { "N": "2" },
+            "TeamsBeatenBracket": {
+              "L": [
+                { "S": "Team#5" }
+              ]
+            },
+            "BracketRank": { "N": "2" }
+          }
+        }
+      },
+      {
+        "PutRequest": {
+          "Item": {
+            "TeamID": { "S": "Team#2" },
+            "TeamName": { "S": "Blockbusters" },
+            "TournamentNumber": { "N": "1" },
+            "Pool": { "S": "B" },
+            "PoolPlayWins": { "N": "2" },
+            "PoolPlayMatchState": { "S": "played" },
+            "PoolPlayDifferentialPoints": {
+              "L": [
+                { "N": "-4" },
+                { "N": "6" }
+              ]
+            },
+            "PoolPlayDifferentialTotal": { "N": "2" },
+            "TeamsBeatenPoolPlay": {
+              "L": [
+                { "S": "Team#3" }
+              ]
+            },
+            "PoolPlayRank": { "N": "3" },
+            "Bracket": { "S": "Silver" },
+            "BracketDifferentialPoints": {
+              "L": [
+                { "N": "3" },
+                { "N": "-1" }
+              ]
+            },
+            "BracketDifferentialTotal": { "N": "2" },
+            "TeamsBeatenBracket": {
+              "L": [
+                { "S": "Team#6" }
+              ]
+            },
+            "BracketRank": { "N": "5" }
+          }
+        }
+      }
+    ]
+  }
+}
