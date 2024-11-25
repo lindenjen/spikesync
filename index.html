@@ -66,6 +66,75 @@
     </div>
   </div>
 
+  <!-- Admin Button -->
+  <button class="admin-button" onclick="showAdminForm()">Admin Form</button>
+
+  <!-- Admin Form Modal -->
+  <div class="admin-form-container" id="adminFormContainer">
+    <button class="close-btn" onclick="hideAdminForm()">&times;</button>
+    <form class="admin-form" id="adminScoreForm">
+      <h2>Admin Score Editor</h2>
+
+      <div class="form-group">
+        <label for="tournament">Select Tournament:</label>
+        <select id="tournament" required onchange="updatePoolOptions()">
+          <option value="">Select Tournament</option>
+          <option value="1">Tournament 1</option>
+          <option value="2">Tournament 2</option>
+          <option value="3">Tournament 3</option>
+          <option value="4">Tournament 4</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="pool">Select Pool:</label>
+        <select id="pool" required onchange="updateMatchOptions()">
+          <option value="">Select Pool</option>
+          <option value="A">Pool A</option>
+          <option value="B">Pool B</option>
+          <option value="C">Pool C</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="match">Select Match:</label>
+        <select id="match" required></select>
+      </div>
+
+      <div class="form-group">
+        <label for="set">Select Set:</label>
+        <select id="set" required>
+          <option value="">Select Set</option>
+          <option value="1">Set 1</option>
+          <option value="2">Set 2</option>
+        </select>
+      </div>      
+
+      <div class="form-group">
+        <label>Teams Playing:</label>
+        <div id="teamsPlaying" class="teams-playing">
+          <p>Team 1: <span id="team1Name">-</span></p>
+          <p>Team 2: <span id="team2Name">-</span></p>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="team1Score">Team 1 Score:</label>
+        <input type="number" id="team1Score" required min="0" max="25">
+      </div>
+
+      <div class="form-group">
+        <label for="team2Score">Team 2 Score:</label>
+        <input type="number" id="team2Score" required min="0" max="25">
+      </div>
+
+      <div class="form-buttons">
+        <button type="button" class="reset-btn" onclick="resetForm()">Reset</button>
+        <button type="submit" class="submit-btn">Submit</button>
+      </div>
+    </form>
+  </div>
+
   <footer class="footer">
     <a href="#" onclick="showHome()" style="color: white; text-decoration: none;">Home Page</a>
   </footer>
