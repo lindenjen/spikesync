@@ -1,0 +1,5 @@
+{
+    "routeKey": "POST /teams",
+    "body": "{\"id\":\"2\",\"teamName\":\"Spikers\",\"tournamentNumber\":1,\"pool\":\"A\",\"poolPlayWins\":0,\"poolPlayMatchState\":\"not played\",\"poolPlayDifferentialPoints\":[],\"poolPlayDifferentialTotal\":0,\"poolPlayRank\":null,\"bracket\":\"Gold\",\"bracketDifferentialPoints\":[],\"bracketDifferentialTotal\":0,\"teamBeatenBracket\":[]}"
+}
+  

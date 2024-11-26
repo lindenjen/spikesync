@@ -1,0 +1,2 @@
+###
+GET https://lumgutev6i.execute-api.us-east-1.amazonaws.com/teams
