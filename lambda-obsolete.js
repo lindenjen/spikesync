@@ -212,7 +212,7 @@ export const handler = async (event) => {
           new PutCommand({
             TableName: tableName,
             Item: {
-              id: `Team#${user.id}`,
+              id: `Team#${team.id}`,
               teamName: team.teamName,
               tournamentNumber: team.tournamentNumber,
               pool: team.pool,
@@ -236,7 +236,7 @@ export const handler = async (event) => {
         body = body.Items.filter((item) => item.id.startsWith("Team#"));
         break;
       
-      case "GET /teams{id}":
+      case "GET /teams/{id}":
         body = await dynamo.send(
           new GetCommand({
             TableName: tableName,
