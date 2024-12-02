@@ -128,21 +128,24 @@ fetchTeamsData();
 
 function showPool(pool) {
   const tableBody = document.querySelector('#poolTable tbody');
-  tableBody.innerHTML = '';
+  tableBody.innerHTML = '';  // Clear existing table rows
 
-  poolData[pool].forEach(team => {
-    const row = document.createElement('tr');
-    row.innerHTML = `
-      <td>${team.team}</td>
-      <td>${team.wins}</td>
-      <td>${team.losses}</td>
-      <td>${team.differential}</td>
-      <td>${team.total}</td>
-      <td>${team.place}</td>
-    `;
-    tableBody.appendChild(row);
-  });
+  if (poolData[pool]) {
+    poolData[pool].forEach(team => {
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td>${team.team}</td>
+        <td>${team.wins}</td>
+        <td>${team.losses}</td>
+        <td>${team.differential}</td>
+        <td>${team.total}</td>
+        <td>${team.place}</td>
+      `;
+      tableBody.appendChild(row);
+    });
+  }
 }
+
 
 function showTournament(number) {
   document.querySelector('.tournament-grid').style.display = 'none';
@@ -267,79 +270,79 @@ document.getElementById('adminScoreForm').addEventListener('submit', async funct
   e.preventDefault();
 
   const formData = {
-    tournament: document.getElementById('tournament').value,
-    pool: document.getElementById('pool').value,
-    match: document.getElementById('match').value,
-    set: document.getElementById('set').value, // Added Set field
-    team1Score: parseInt(document.getElementById('team1Score').value),
-    team2Score: parseInt(document.getElementById('team2Score').value),
+    tournament: document.getElementById('tournament').value, // Selected tournament
+    pool: document.getElementById('pool').value, // Selected pool
+    match: document.getElementById('match').value, // Selected match
+    set: document.getElementById('set').value, // Set field
+    team1Score: parseInt(document.getElementById('team1Score').value), // Team 1 score
+    team2Score: parseInt(document.getElementById('team2Score').value), // Team 2 score
   };
 
-  // Validate formData
+  // Validate form data
   if (!formData.tournament || !formData.pool || !formData.match || !formData.set) {
     alert('Please complete all fields.');
     return;
   }
 
-  // Find the match information
   const matchInfo = matchPairings[formData.pool]?.find(
     (match, index) => index + 1 === parseInt(formData.match)
   );
 
   if (matchInfo) {
-    const team1 = poolData[formData.pool].find(t => t.team === matchInfo.team1);
-    const team2 = poolData[formData.pool].find(t => t.team === matchInfo.team2);
+    const team1 = poolData[formData.pool]?.find(t => t.team === matchInfo.team1);
+    const team2 = poolData[formData.pool]?.find(t => t.team === matchInfo.team2);
 
-    // Update team stats in poolData
-    if (formData.team1Score > formData.team2Score) {
-      team1.wins++;
-      team2.losses++;
-    } else {
-      team2.wins++;
-      team1.losses++;
+    if (team1 && team2) {
+      // Update scores and stats for the selected teams
+      if (formData.team1Score > formData.team2Score) {
+        team1.wins++;
+        team2.losses++;
+      } else {
+        team2.wins++;
+        team1.losses++;
+      }
+
+      team1.differential += formData.team1Score - formData.team2Score;
+      team2.differential -= formData.team1Score - formData.team2Score;
+
+      team1.total += formData.team1Score;
+      team2.total += formData.team2Score;
+
+      // Sort and update team standings for the selected pool
+      poolData[formData.pool].sort((a, b) => b.wins - a.wins || b.differential - a.differential);
+      poolData[formData.pool].forEach((team, index) => {
+        team.place = index + 1;
+      });
+
+      // Update the displayed pool table for the selected pool
+      showPool(formData.pool);
+
+      // Update the API only for the selected teams and pool
+      const team1Updates = {
+        PoolPlayDifferentialPoints: [team1.differential],
+        PoolPlayWins: team1.wins,
+        PoolPlayMatchState: "played",
+      };
+      const team2Updates = {
+        PoolPlayDifferentialPoints: [team2.differential],
+        PoolPlayWins: team2.wins,
+        PoolPlayMatchState: "played",
+      };
+
+      // Send updates to the API
+      await updateTeamInAPI(team1.id, team1Updates);
+      await updateTeamInAPI(team2.id, team2Updates);
     }
-    team1.differential += formData.team1Score - formData.team2Score;
-    team2.differential -= formData.team1Score - formData.team2Score;
-
-    team1.total += formData.team1Score;
-    team2.total += formData.team2Score;
-
-    // Sort and update team standings
-    const pool = poolData[formData.pool];
-    pool.sort((a, b) => b.wins - a.wins || b.differential - a.differential);
-    pool.forEach((team, index) => {
-      team.place = index + 1;
-    });
-
-    // Refresh displayed pool
-    showPool(formData.pool);
-
-    // Prepare updates for API
-    const team1Updates = {
-      PoolPlayDifferentialPoints: [team1.differential],
-      PoolPlayWins: team1.wins,
-      PoolPlayMatchState: "played",
-    };
-    const team2Updates = {
-      PoolPlayDifferentialPoints: [team2.differential],
-      PoolPlayWins: team2.wins,
-      PoolPlayMatchState: "played",
-    };
-
-    // Send updates to the API
-    await updateTeamInAPI(team1.id, team1Updates);
-    await updateTeamInAPI(team2.id, team2Updates);
   }
 
-  console.log('Form Submitted:', formData);
   resetForm();
   hideAdminForm();
 });
 
-// Function to update team data in the API
+
 async function updateTeamInAPI(teamId, updates) {
   try {
-    const apiUrl = `https://lumgutev6i.execute-api.us-east-1.amazonaws.com/teams/${teamId}`;
+    const apiUrl = `https://lumgutev6i.execute-api.us-east-1.amazonaws.com/teams/Team#${teamId}`;
     const response = await fetch(apiUrl, {
       method: "PUT",
       headers: {
